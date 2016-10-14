@@ -1,0 +1,8 @@
+function [ sampledSignal ] = sample( originalSignal, N )
+%sample : this function do the sampling process of a signal
+    delta = size(originalSignal)/N;
+    for i=1:1:N,
+        sampledSignal[i] = sampleInterval(originalSignal((i-1)*delta+1:i*delta));
+    end 
+end
+
