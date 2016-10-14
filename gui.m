@@ -22,7 +22,7 @@ function varargout = gui(varargin)
 
 % Edit the above text to modify the response to help gui
 
-% Last Modified by GUIDE v2.5 14-Oct-2016 09:31:53
+% Last Modified by GUIDE v2.5 14-Oct-2016 10:09:30
 
 % Begin initialization code - DO NOT EDIT
 gui_Singleton = 1;
@@ -661,8 +661,7 @@ switch str{val};
         s = s5(A,Beta,Omega,Alpha,Phi,t_grid);
 end
 if ~strcmp(str{val},'Please Select a Function'),
-    disp('hi');
-    soundsc(s,192000);
+    sound(s,44100);
 end
 
 
@@ -720,11 +719,34 @@ if ispc && isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgr
 end
 
 
-% --- Executes on button press in pushbutton7.
-function pushbutton7_Callback(hObject, eventdata, handles)
-% hObject    handle to pushbutton7 (see GCBO)
-% eventdata  reserved - to be defined in a future version of MATLAB
-% handles    structure with handles and user data (see GUIDATA)
+% --- Executes on button press in SSQ.
+function SSQ_Callback(hObject, eventdata, handles)
+t_grid = 0:0.00001:1; 
+A = str2double(get(handles.A,'String'));
+Omega = str2double(get(handles.Omega,'String'));
+Phi = str2double(get(handles.Phi,'String'));
+Alpha = str2double(get(handles.Alpha,'String'));
+Beta = str2double(get(handles.Beta,'String'));
+N = str2double(get(handles.N,'String'));
+b = str2double(get(handles.b,'String'));
+str =get(handles.FunctionsMenu,'String');
+val =get(handles.FunctionsMenu,'Value');
+switch str{val};
+    case 'Function - 1'
+        s = s1(A,Omega,Phi,t_grid);
+    case 'Function - 2'
+        s = s2(A,Omega,Phi,t_grid);
+    case 'Function - 3'
+        s = s3(A,Omega,Alpha,Phi,t_grid);
+    case 'Function - 4'
+        s = s4(A,Omega,Alpha,Phi,t_grid);
+    case 'Function - 5'
+        s = s5(A,Beta,Omega,Alpha,Phi,t_grid);
+end
+if ~strcmp(str{val},'Please Select a Function'),
+    qss = sampleAndQuantize(s,N,b);
+    sound(qss,44100);
+end
 
 
 % --- Executes on selection change in popupmenu6.
