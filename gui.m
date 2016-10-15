@@ -22,16 +22,16 @@ function varargout = gui(varargin)
 
 % Edit the above text to modify the response to help gui
 
-% Last Modified by GUIDE v2.5 14-Oct-2016 10:09:30
+% Last Modified by GUIDE v2.5 15-Oct-2016 08:19:38
 
 % Begin initialization code - DO NOT EDIT
 gui_Singleton = 1;
 gui_State = struct('gui_Name',       mfilename, ...
-                   'gui_Singleton',  gui_Singleton, ...
-                   'gui_OpeningFcn', @gui_OpeningFcn, ...
-                   'gui_OutputFcn',  @gui_OutputFcn, ...
-                   'gui_LayoutFcn',  [] , ...
-                   'gui_Callback',   []);
+    'gui_Singleton',  gui_Singleton, ...
+    'gui_OpeningFcn', @gui_OpeningFcn, ...
+    'gui_OutputFcn',  @gui_OutputFcn, ...
+    'gui_LayoutFcn',  [] , ...
+    'gui_Callback',   []);
 if nargin && ischar(varargin{1})
     gui_State.gui_Callback = str2func(varargin{1});
 end
@@ -63,7 +63,7 @@ guidata(hObject, handles);
 
 
 % --- Outputs from this function are returned to the command line.
-function varargout = gui_OutputFcn(hObject, eventdata, handles) 
+function varargout = gui_OutputFcn(hObject, eventdata, handles)
 % varargout  cell array for returning output args (see VARARGOUT);
 % hObject    handle to figure
 % eventdata  reserved - to be defined in a future version of MATLAB
@@ -243,15 +243,15 @@ end
 
 % --- Executes on button press in Clear.
 function Clear_Callback(hObject, eventdata, handles)
-    initialize_gui(gcbf, handles, true);
+initialize_gui(gcbf, handles, true);
 
 % hObject    handle to Clear (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
-    
+
 % --- Executes on button press in Apply.
 function Apply_Callback(hObject, eventdata, handles)
-t_grid = 0:0.00001:1; 
+t_grid = 0:0.00001:1;
 A = str2double(get(handles.A,'String'));
 Omega = str2double(get(handles.Omega,'String'));
 Phi = str2double(get(handles.Phi,'String'));
@@ -489,72 +489,72 @@ function popupmenu2_Callback(hObject, eventdata, handles)
 
 % --- Executes on selection change in FunctionsMenu.
 function FunctionsMenu_Callback(hObject, eventdata, handles)
-    set(handles.A,'visible','on');
-    set(handles.A_t,'visible','on');
-    set(handles.Omega,'visible','on');
-    set(handles.Omega_t,'visible','on');
-    set(handles.Phi,'visible','on');
-    set(handles.Phi_t,'visible','on');
-    set(handles.N,'visible','on');
-    set(handles.N_t,'visible','on');
-    set(handles.b,'visible','on');
-    set(handles.b_t,'visible','on');
-    str =get(hObject,'String');
-    val =get(hObject,'Value');
-    switch str{val};
-        case 'Please Select a Function'
-           set(handles.A,'visible','of');
-           set(handles.A_t,'visible','of');
-           set(handles.Omega,'visible','of');
-           set(handles.Omega_t,'visible','of');
-           set(handles.Phi,'visible','of');
-           set(handles.Phi_t,'visible','of');
-           set(handles.Alpha,'visible','off');
-           set(handles.Alpha_t,'visible','off');
-           set(handles.Beta,'visible','off');
-           set(handles.Beta_t,'visible','off');
-           set(handles.N,'visible','off');
-           set(handles.N_t,'visible','off');
-           set(handles.b,'visible','off');
-           set(handles.b_t,'visible','off');
-        case 'Function - 1'
-           set(handles.A_t,'String','A :');
-           set(handles.Omega_t,'String','Omega :');
-           set(handles.Alpha,'visible','off');
-           set(handles.Alpha_t,'visible','off');
-           set(handles.Beta,'visible','off');
-           set(handles.Beta_t,'visible','off');
-        case 'Function - 2'
-           set(handles.A_t,'String','A :');
-           set(handles.Omega_t,'String','Omega :');
-           set(handles.Alpha,'visible','off');
-           set(handles.Alpha_t,'visible','off');
-           set(handles.Beta,'visible','off');
-           set(handles.Beta_t,'visible','off');
-        case 'Function - 3'
-           set(handles.A_t,'String','A :');
-           set(handles.Omega_t,'String','Omega_0 :');
-           set(handles.Alpha,'visible','on');
-           set(handles.Alpha_t,'visible','on');
-           set(handles.Beta,'visible','off');
-           set(handles.Beta_t,'visible','off');
-        case 'Function - 4'
-           set(handles.A_t,'String','A :');
-           set(handles.Omega_t,'String','Omega_0 :');
-           set(handles.Alpha,'visible','on');
-           set(handles.Alpha_t,'visible','on');
-           set(handles.Beta,'visible','off');
-           set(handles.Beta_t,'visible','off');
-        case 'Function - 5'
-           set(handles.A_t,'String','A_0 :');
-           set(handles.Omega_t,'String','Omega_0 :');
-           set(handles.Phi,'visible','on');
-           set(handles.Phi_t,'visible','on');
-           set(handles.Alpha,'visible','on');
-           set(handles.Alpha_t,'visible','on');
-           set(handles.Beta,'visible','on');
-           set(handles.Beta_t,'visible','on');
-    end 
+set(handles.A,'visible','on');
+set(handles.A_t,'visible','on');
+set(handles.Omega,'visible','on');
+set(handles.Omega_t,'visible','on');
+set(handles.Phi,'visible','on');
+set(handles.Phi_t,'visible','on');
+set(handles.N,'visible','on');
+set(handles.N_t,'visible','on');
+set(handles.b,'visible','on');
+set(handles.b_t,'visible','on');
+str =get(hObject,'String');
+val =get(hObject,'Value');
+switch str{val};
+    case 'Please Select a Function'
+        set(handles.A,'visible','of');
+        set(handles.A_t,'visible','of');
+        set(handles.Omega,'visible','of');
+        set(handles.Omega_t,'visible','of');
+        set(handles.Phi,'visible','of');
+        set(handles.Phi_t,'visible','of');
+        set(handles.Alpha,'visible','off');
+        set(handles.Alpha_t,'visible','off');
+        set(handles.Beta,'visible','off');
+        set(handles.Beta_t,'visible','off');
+        set(handles.N,'visible','off');
+        set(handles.N_t,'visible','off');
+        set(handles.b,'visible','off');
+        set(handles.b_t,'visible','off');
+    case 'Function - 1'
+        set(handles.A_t,'String','A :');
+        set(handles.Omega_t,'String','Omega :');
+        set(handles.Alpha,'visible','off');
+        set(handles.Alpha_t,'visible','off');
+        set(handles.Beta,'visible','off');
+        set(handles.Beta_t,'visible','off');
+    case 'Function - 2'
+        set(handles.A_t,'String','A :');
+        set(handles.Omega_t,'String','Omega :');
+        set(handles.Alpha,'visible','off');
+        set(handles.Alpha_t,'visible','off');
+        set(handles.Beta,'visible','off');
+        set(handles.Beta_t,'visible','off');
+    case 'Function - 3'
+        set(handles.A_t,'String','A :');
+        set(handles.Omega_t,'String','Omega_0 :');
+        set(handles.Alpha,'visible','on');
+        set(handles.Alpha_t,'visible','on');
+        set(handles.Beta,'visible','off');
+        set(handles.Beta_t,'visible','off');
+    case 'Function - 4'
+        set(handles.A_t,'String','A :');
+        set(handles.Omega_t,'String','Omega_0 :');
+        set(handles.Alpha,'visible','on');
+        set(handles.Alpha_t,'visible','on');
+        set(handles.Beta,'visible','off');
+        set(handles.Beta_t,'visible','off');
+    case 'Function - 5'
+        set(handles.A_t,'String','A_0 :');
+        set(handles.Omega_t,'String','Omega_0 :');
+        set(handles.Phi,'visible','on');
+        set(handles.Phi_t,'visible','on');
+        set(handles.Alpha,'visible','on');
+        set(handles.Alpha_t,'visible','on');
+        set(handles.Beta,'visible','on');
+        set(handles.Beta_t,'visible','on');
+end
 
 
 % Hint: popupmenu controls usually have a white background on Windows.
@@ -623,22 +623,27 @@ function Clear_ButtonDownFcn(hObject, eventdata, handles)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
 
+
+
+
+
+
 % --------------------------------------------------------------------
 function initialize_gui(fig_handle, handles, isreset)
-    set(handles.A,'String','');
-    set(handles.Omega,'String','');
-    set(handles.Phi,'String','');
-    set(handles.Alpha,'String','');
-    set(handles.Beta,'String','');
-    set(handles.b,'String','');
-    set(handles.N,'String','');
-    cla(handles.axes1);
-    cla(handles.axes2);
+set(handles.A,'String','');
+set(handles.Omega,'String','');
+set(handles.Phi,'String','');
+set(handles.Alpha,'String','');
+set(handles.Beta,'String','');
+set(handles.b,'String','');
+set(handles.N,'String','');
+cla(handles.axes1);
+cla(handles.axes2);
 
 
 % --- Executes on button press in playS.
 function playS_Callback(hObject, eventdata, handles)
-t_grid = 0:0.00001:1; 
+t_grid = 0:0.00001:1;
 A = str2double(get(handles.A,'String'));
 Omega = str2double(get(handles.Omega,'String'));
 Phi = str2double(get(handles.Phi,'String'));
@@ -721,7 +726,7 @@ end
 
 % --- Executes on button press in SSQ.
 function SSQ_Callback(hObject, eventdata, handles)
-t_grid = 0:0.00001:1; 
+t_grid = 0:0.00001:1;
 A = str2double(get(handles.A,'String'));
 Omega = str2double(get(handles.Omega,'String'));
 Phi = str2double(get(handles.Phi,'String'));
@@ -770,3 +775,10 @@ function FunctionsMenu_CreateFcn(hObject, eventdata, handles)
 if ispc && isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgroundColor'))
     set(hObject,'BackgroundColor','white');
 end
+
+
+% --- Executes during object creation, after setting all properties.
+function figure1_CreateFcn(hObject, eventdata, handles)
+% hObject    handle to figure1 (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    empty - handles not created until after all CreateFcns called
