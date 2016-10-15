@@ -661,7 +661,7 @@ switch str{val};
         s = s5(A,Beta,Omega,Alpha,Phi,t_grid);
 end
 if ~strcmp(str{val},'Please Select a Function'),
-    sound(s,44100);
+    sound(s,10000);
 end
 
 
@@ -745,7 +745,7 @@ switch str{val};
 end
 if ~strcmp(str{val},'Please Select a Function'),
     qss = sampleAndQuantize(s,N,b);
-    sound(qss,44100);
+    sound(qss,max(N,1000));
 end
 
 
