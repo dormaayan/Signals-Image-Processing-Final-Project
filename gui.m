@@ -22,7 +22,7 @@ function varargout = gui(varargin)
 
 % Edit the above text to modify the response to help gui
 
-% Last Modified by GUIDE v2.5 15-Oct-2016 08:19:38
+% Last Modified by GUIDE v2.5 17-Oct-2016 08:19:37
 
 % Begin initialization code - DO NOT EDIT
 gui_Singleton = 1;
@@ -278,7 +278,7 @@ if ~strcmp(str{val},'Please Select a Function'),
     qss = sampleAndQuantize(s,N,b);
     plot(handles.axes1,t_grid,s);
     plot(handles.axes2,0:(1/(N-1)):1,qss);
-    set(handles.text12,'String',mseProject(s,qss));
+    set(handles.mseT,'String',mseProject(s,qss));
 end
 
 
@@ -637,6 +637,7 @@ set(handles.Alpha,'String','');
 set(handles.Beta,'String','');
 set(handles.b,'String','');
 set(handles.N,'String','');
+set(handles.mseT,'String','');
 cla(handles.axes1);
 cla(handles.axes2);
 
