@@ -630,6 +630,7 @@ function Clear_ButtonDownFcn(hObject, eventdata, handles)
 
 % --------------------------------------------------------------------
 function initialize_gui(fig_handle, handles, isreset)
+set(handles.FunctionsMenu,'Value',1);
 set(handles.A,'String','');
 set(handles.Omega,'String','');
 set(handles.Phi,'String','');
@@ -640,21 +641,6 @@ set(handles.N,'String','');
 set(handles.mseT,'String','');
 cla(handles.axes1);
 cla(handles.axes2);
-set(handles.FunctionsMenu,'Value',1);
-set(handles.A,'visible','of');
-set(handles.A_t,'visible','of');
-set(handles.Omega,'visible','of');
-set(handles.Omega_t,'visible','of');
-set(handles.Phi,'visible','of');
-set(handles.Phi_t,'visible','of');
-set(handles.Alpha,'visible','off');
-set(handles.Alpha_t,'visible','off');
-set(handles.Beta,'visible','off');
-set(handles.Beta_t,'visible','off');
-set(handles.N,'visible','off');
-set(handles.N_t,'visible','off');
-set(handles.b,'visible','off');
-set(handles.b_t,'visible','off');
 
 
 % --- Executes on button press in playS.
@@ -795,6 +781,7 @@ end
 
 % --- Executes during object creation, after setting all properties.
 function figure1_CreateFcn(hObject, eventdata, handles)
+    initialize_gui(gcbf, handles, true);
 % hObject    handle to figure1 (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    empty - handles not created until after all CreateFcns called
