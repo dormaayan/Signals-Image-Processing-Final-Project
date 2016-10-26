@@ -1,7 +1,7 @@
 function varargout = gui(varargin)
 
 
-% Last Modified by GUIDE v2.5 26-Oct-2016 07:56:42
+% Last Modified by GUIDE v2.5 26-Oct-2016 08:40:07
 
 % Begin initialization code - DO NOT EDIT
 gui_Singleton = 1;
@@ -60,7 +60,10 @@ set(handles.N,'visible','off');
 set(handles.N_t,'visible','off');
 set(handles.b,'visible','off');
 set(handles.b_t,'visible','off');
-
+set(handles.computation_method,'visible','off');
+set(handles.computation_method,'visible','off');
+set(handles.specific_values,'visible','off');
+set(handles.best_values,'visible','off');
 % --- Executes on button press in Clear.
 function Clear_Callback(hObject, eventdata, handles)
 initialize_gui(gcbf, handles, true);
@@ -91,7 +94,25 @@ switch str{val};
         s = s5(A,Beta,Omega,Alpha,Phi,t_grid);
 end
 if ~strcmp(str{val},'Please Select a Function'),
-    qss = sampleAndQuantize(s,N,b);
+    if get(handles.specific_values,'Value')==1,
+        qss = sampleAndQuantize(s,N,b);
+    end
+    if get(handles.best_values,'Value')==1,
+        bitBudget = get(handles.bit_budget,'String');
+        qss = sampleAndQuantize(s,bitBudget,1);
+        mse = mseProject(s,qss);
+        for b=2:1:8,
+           l = bitBudget/b;
+            if mod(bitBudget/b,1)~=0,
+                l = floor(bitBudget/b);
+            end 
+               if mseProject(s,sampleAndQuantize(s,b,bitBudget/b))<mse,
+                   qss = sampleAndQuantize(s,b,bitBudget/b);
+                   mse = mseProject(s,qss);
+               end
+           end
+     end 
+end
     plot(handles.axes1,t_grid,s);
     plot(handles.axes2,0:(1/(N-1)):1,qss);
     set(handles.mseT,'String',mseProject(s,qss));
@@ -111,6 +132,9 @@ set(handles.N,'visible','on');
 set(handles.N_t,'visible','on');
 set(handles.b,'visible','on');
 set(handles.b_t,'visible','on');
+set(handles.computation_method,'visible','on');
+set(handles.specific_values,'visible','on');
+set(handles.best_values,'visible','on');
 str =get(hObject,'String');
 val =get(hObject,'Value');
 switch str{val};
@@ -237,21 +261,13 @@ function specific_values_Callback(hObject, eventdata, handles)
 
 % --- Executes on button press in best_values.
 function best_values_Callback(hObject, eventdata, handles)
-
-
+        set(handles.N,'visible','off');
+        set(handles.N_t,'visible','off');
+        set(handles.b,'visible','off');
+        set(handles.b_t,'visible','off');
+        set(handles.bit_budget,'visible','on');
+        set(handles.bit_budget_t,'visible','on');
 %My Own Functions
-
-function [A Omega Phi Alpha Beta N b ]  = get_parameters(hObject, eventdata, handles)
-A = str2double(get(handles.A,'String'));
-Omega = str2double(get(handles.Omega,'String'));
-Phi = str2double(get(handles.Phi,'String'));
-Alpha = str2double(get(handles.Alpha,'String'));
-Beta = str2double(get(handles.Beta,'String'));
-N = str2double(get(handles.N,'String'));
-b = str2double(get(handles.b,'String'));
-str =get(handles.FunctionsMenu,'String');
-val =get(handles.FunctionsMenu,'Value');
-end
 
 %~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 %~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -421,3 +437,24 @@ if ispc && isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgr
 end
 
 
+
+function bit_budget_Callback(hObject, eventdata, handles)
+% hObject    handle to bit_budget (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+
+% Hints: get(hObject,'String') returns contents of bit_budget as text
+%        str2double(get(hObject,'String')) returns contents of bit_budget as a double
+
+
+% --- Executes during object creation, after setting all properties.
+function bit_budget_CreateFcn(hObject, eventdata, handles)
+% hObject    handle to bit_budget (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    empty - handles not created until after all CreateFcns called
+
+% Hint: edit controls usually have a white background on Windows.
+%       See ISPC and COMPUTER.
+if ispc && isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgroundColor'))
+    set(hObject,'BackgroundColor','white');
+end
