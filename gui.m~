@@ -64,6 +64,8 @@ set(handles.computation_method,'visible','off');
 set(handles.computation_method,'visible','off');
 set(handles.specific_values,'visible','off');
 set(handles.best_values,'visible','off');
+set(handles.bit_budget,'visible','off');
+set(handles.bit_budget_t,'visible','off');
 % --- Executes on button press in Clear.
 function Clear_Callback(hObject, eventdata, handles)
 initialize_gui(gcbf, handles, true);
@@ -96,29 +98,30 @@ end
 if ~strcmp(str{val},'Please Select a Function'),
     if get(handles.specific_values,'Value')==1,
         qss = sampleAndQuantize(s,N,b);
+        min_b = b;
     end
     if get(handles.best_values,'Value')==1,
-        bitBudget = get(handles.bit_budget,'String');
+        bitBudget = str2double(get(handles.bit_budget,'String'));
         qss = sampleAndQuantize(s,bitBudget,1);
         mse = mseProject(s,qss);
+        min_b = 1;
         for b=2:1:8,
            l = bitBudget/b;
             if mod(bitBudget/b,1)~=0,
                 l = floor(bitBudget/b);
             end 
-               if mseProject(s,sampleAndQuantize(s,b,bitBudget/b))<mse,
-                   qss = sampleAndQuantize(s,b,bitBudget/b);
+               if mseProject(s,sampleAndQuantize(s,bitBudget/b,b))<mse,
+                   qss = sampleAndQuantize(s,bitBudget/b,b);
                    mse = mseProject(s,qss);
+                   min_b = b;
                end
            end
      end 
 end
     plot(handles.axes1,t_grid,s);
-    plot(handles.axes2,0:(1/(N-1)):1,qss);
+    plot(handles.axes2,0:(1/(floor(bitbUDGET/-1)):1,qss);
     set(handles.mseT,'String',mseProject(s,qss));
-end
-
-
+    set(handles.data_info,'String',min_b); 
 
 % --- Executes on selection change in FunctionsMenu.
 function FunctionsMenu_Callback(hObject, eventdata, handles)
@@ -256,7 +259,12 @@ end
 
 % --- Executes on button press in specific_values.
 function specific_values_Callback(hObject, eventdata, handles)
-
+        set(handles.N,'visible','on');
+        set(handles.N_t,'visible','on');
+        set(handles.b,'visible','on');
+        set(handles.b_t,'visible','on');
+        set(handles.bit_budget,'visible','off');
+        set(handles.bit_budget_t,'visible','off');
 
 
 % --- Executes on button press in best_values.

@@ -43,6 +43,8 @@ set(handles.Beta,'String','');
 set(handles.b,'String','');
 set(handles.N,'String','');
 set(handles.mseT,'String','');
+set(handles.n_info,'String','');
+set(handles.b_info,'String','');
 cla(handles.axes1);
 cla(handles.axes2);
 set(handles.FunctionsMenu,'Value',1);
@@ -97,11 +99,12 @@ switch str{val};
 end
 if ~strcmp(str{val},'Please Select a Function'),
     if get(handles.specific_values,'Value')==1,
+        bitBudget = N*b;
         qss = sampleAndQuantize(s,N,b);
         min_b = b;
     end
     if get(handles.best_values,'Value')==1,
-        bitBudget = get(handles.bit_budget,'String');
+        bitBudget = str2double(get(handles.bit_budget,'String'));
         qss = sampleAndQuantize(s,bitBudget,1);
         mse = mseProject(s,qss);
         min_b = 1;
@@ -119,10 +122,11 @@ if ~strcmp(str{val},'Please Select a Function'),
      end 
 end
     plot(handles.axes1,t_grid,s);
-    plot(handles.axes2,0:(1/(N-1)):1,qss);
+    plot(handles.axes2,0:(1/(floor(bitBudget/min_b)-1)):1,qss);
     set(handles.mseT,'String',mseProject(s,qss));
-    set(handles.data_info,'String',min_b); 
-
+    set(handles.b_info,'String',min_b); 
+    set(handles.n_info,'String',floor(bitBudget/min_b)); 
+    
 % --- Executes on selection change in FunctionsMenu.
 function FunctionsMenu_Callback(hObject, eventdata, handles)
 set(handles.A,'visible','on');
@@ -253,7 +257,28 @@ switch str{val};
         s = s5(A,Beta,Omega,Alpha,Phi,t_grid);
 end
 if ~strcmp(str{val},'Please Select a Function'),
-    qss = sampleAndQuantize(s,N,b);
+    if get(handles.specific_values,'Value')==1,
+        bitBudget = N*b;
+        qss = sampleAndQuantize(s,N,b);
+    end
+    if get(handles.best_values,'Value')==1,
+        bitBudget = str2double(get(handles.bit_budget,'String'));
+        qss = sampleAndQuantize(s,bitBudget,1);
+        mse = mseProject(s,qss);
+        for b=2:1:8,
+           l = bitBudget/b;
+            if mod(bitBudget/b,1)~=0,
+                l = floor(bitBudget/b);
+            end 
+               if mseProject(s,sampleAndQuantize(s,bitBudget/b,b))<mse,
+                   qss = sampleAndQuantize(s,bitBudget/b,b);
+                   mse = mseProject(s,qss);
+               end
+           end
+     end 
+end
+if ~strcmp(str{val},'Please Select a Function'),
+    qss = decompress_1d(qss,numel(t_grid));
     sound(qss,max(N,1000));
 end
 
