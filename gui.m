@@ -227,7 +227,7 @@ switch str{val};
         s = s5(A,Beta,Omega,Alpha,Phi,t_grid);
 end
 if ~strcmp(str{val},'Please Select a Function'),
-    sound(s,10000);
+    sound(s,25000);
 end
 
 
@@ -278,8 +278,8 @@ if ~strcmp(str{val},'Please Select a Function'),
      end 
 end
 if ~strcmp(str{val},'Please Select a Function'),
-    qss = decompress_1d(qss,numel(t_grid));
-    sound(qss,max(N,1000));
+%     qss = decompress_1d(qss,numel(t_grid));
+    sound(qss,25000);
 end
 
 % --- Executes on button press in specific_values.
