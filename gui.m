@@ -109,32 +109,30 @@ if ~strcmp(str{val},'Please Select a Function'),
         mse = mseProject(s,qss);
         min_b = 1;
         for b=2:1:16,
-           l = bitBudget/b;
-            if mod(bitBudget/b,1)~=0,
-                l = floor(bitBudget/b);
-            end 
-               if mseProject(s,sampleAndQuantize(s,bitBudget/b,b))<mse,
-                   qss = sampleAndQuantize(s,bitBudget/b,b);
-                   mse = mseProject(s,qss);
-                   min_b = b;
-               end
+            tempQss = sampleAndQuantize(s,floor(bitBudget/b),b);
+            tempMse = mseProject(s,tempQss);
+            if tempMse<mse,
+                qss = tempQss;
+                mse = tempMse;
+                min_b = b;
+            end
         end
         if str{val} == 'Function - 1'
-          bitBudget = str2double(get(handles.bit_budget,'String'));
-          bOptimal = 2*log2((4*bitBudget*(log(2)))/(3*pi*Omega*(4*pi*Omega+sin(4*pi*Omega+2*Phi)-sin(2*Phi))));
-          nOptimal = bitBudget/bOptimal;
-          set(handles.bM,'String',bOptimal); 
-          set(handles.nM,'String',nOptimal); 
+            bitBudget = str2double(get(handles.bit_budget,'String'));
+            bOptimal = 2*log2((4*bitBudget*(log(2)))/(3*pi*Omega*(4*pi*Omega+sin(4*pi*Omega+2*Phi)-sin(2*Phi))));
+            nOptimal = bitBudget/bOptimal;
+            set(handles.bM,'String',bOptimal);
+            set(handles.nM,'String',nOptimal);
         end
-     end 
+    end
 end
-    plot(handles.axes1,t_grid,s);
-    plot(handles.axes2,0:(1/(floor(bitBudget/min_b)-1)):1,qss);
-    set(handles.mseT,'String',mseProject(s,qss));
-    set(handles.b_info,'String',min_b); 
-    set(handles.n_info,'String',floor(bitBudget/min_b));
+plot(handles.axes1,t_grid,s);
+plot(handles.axes2,0:(1/(floor(bitBudget/min_b)-1)):1,qss);
+set(handles.mseT,'String',mseProject(s,qss));
+set(handles.b_info,'String',min_b);
+set(handles.n_info,'String',floor(bitBudget/min_b));
 
-    
+
 % --- Executes on selection change in FunctionsMenu.
 function FunctionsMenu_Callback(hObject, eventdata, handles)
 set(handles.A,'visible','on');
@@ -274,40 +272,40 @@ if ~strcmp(str{val},'Please Select a Function'),
         qss = sampleAndQuantize(s,bitBudget,1);
         mse = mseProject(s,qss);
         for b=2:1:8,
-           l = bitBudget/b;
+            l = bitBudget/b;
             if mod(bitBudget/b,1)~=0,
                 l = floor(bitBudget/b);
-            end 
-               if mseProject(s,sampleAndQuantize(s,bitBudget/b,b))<mse,
-                   qss = sampleAndQuantize(s,bitBudget/b,b);
-                   mse = mseProject(s,qss);
-               end
-           end
-     end 
+            end
+            if mseProject(s,sampleAndQuantize(s,bitBudget/b,b))<mse,
+                qss = sampleAndQuantize(s,bitBudget/b,b);
+                mse = mseProject(s,qss);
+            end
+        end
+    end
 end
 if ~strcmp(str{val},'Please Select a Function'),
-%     qss = decompress_1d(qss,numel(t_grid));
+    %     qss = decompress_1d(qss,numel(t_grid));
     sound(qss,25000);
 end
 
 % --- Executes on button press in specific_values.
 function specific_values_Callback(hObject, eventdata, handles)
-        set(handles.N,'visible','on');
-        set(handles.N_t,'visible','on');
-        set(handles.b,'visible','on');
-        set(handles.b_t,'visible','on');
-        set(handles.bit_budget,'visible','off');
-        set(handles.bit_budget_t,'visible','off');
+set(handles.N,'visible','on');
+set(handles.N_t,'visible','on');
+set(handles.b,'visible','on');
+set(handles.b_t,'visible','on');
+set(handles.bit_budget,'visible','off');
+set(handles.bit_budget_t,'visible','off');
 
 
 % --- Executes on button press in best_values.
 function best_values_Callback(hObject, eventdata, handles)
-        set(handles.N,'visible','off');
-        set(handles.N_t,'visible','off');
-        set(handles.b,'visible','off');
-        set(handles.b_t,'visible','off');
-        set(handles.bit_budget,'visible','on');
-        set(handles.bit_budget_t,'visible','on');
+set(handles.N,'visible','off');
+set(handles.N_t,'visible','off');
+set(handles.b,'visible','off');
+set(handles.b_t,'visible','off');
+set(handles.bit_budget,'visible','on');
+set(handles.bit_budget_t,'visible','on');
 %My Own Functions
 
 %~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
