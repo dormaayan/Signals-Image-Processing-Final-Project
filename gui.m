@@ -107,9 +107,8 @@ if ~strcmp(str{val},'Please Select a Function'),
         bitBudget = str2double(get(handles.bit_budget,'String'));
         qss = sampleAndQuantize(s,bitBudget,1);
         mse = mseProject(s,qss);
-             disp(qss);
         min_b = 1;
-        for b=2:1:8,
+        for b=2:1:16,
            l = bitBudget/b;
             if mod(bitBudget/b,1)~=0,
                 l = floor(bitBudget/b);
@@ -119,14 +118,22 @@ if ~strcmp(str{val},'Please Select a Function'),
                    mse = mseProject(s,qss);
                    min_b = b;
                end
-           end
+        end
+        if str{val} == 'Function - 1'
+          bitBudget = str2double(get(handles.bit_budget,'String'));
+          bOptimal = 2*log2((4*bitBudget*(log(2)))/(3*pi*Omega*(4*pi*Omega+sin(4*pi*Omega+2*Phi)-sin(2*Phi))));
+          nOptimal = bitBudget/bOptimal;
+          set(handles.bM,'String',bOptimal); 
+          set(handles.nM,'String',nOptimal); 
+        end
      end 
 end
     plot(handles.axes1,t_grid,s);
     plot(handles.axes2,0:(1/(floor(bitBudget/min_b)-1)):1,qss);
     set(handles.mseT,'String',mseProject(s,qss));
     set(handles.b_info,'String',min_b); 
-    set(handles.n_info,'String',floor(bitBudget/min_b)); 
+    set(handles.n_info,'String',floor(bitBudget/min_b));
+
     
 % --- Executes on selection change in FunctionsMenu.
 function FunctionsMenu_Callback(hObject, eventdata, handles)
