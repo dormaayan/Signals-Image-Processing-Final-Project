@@ -107,8 +107,7 @@ if ~strcmp(str{val},'Please Select a Function'),
         bitBudget = str2double(get(handles.bit_budget,'String'));
         qss = sampleAndQuantize(s,bitBudget,1);
         mse = mseProject(s,qss);
-        disp(qss);
-%         ???disp(mse);
+             disp(qss);
         min_b = 1;
         for b=2:1:8,
            l = bitBudget/b;
@@ -118,9 +117,7 @@ if ~strcmp(str{val},'Please Select a Function'),
                if mseProject(s,sampleAndQuantize(s,bitBudget/b,b))<mse,
                    qss = sampleAndQuantize(s,bitBudget/b,b);
                    mse = mseProject(s,qss);
-                   disp('change');
                    min_b = b;
-                   disp(min_b)
                end
            end
      end 
