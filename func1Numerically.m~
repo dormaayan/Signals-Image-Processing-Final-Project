@@ -1,4 +1,0 @@
-function [ b,N,mse] = func1Numerically( omega,phi,B)
-    b = solve(pi*omega/(2*B^2)*
-end
-
