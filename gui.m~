@@ -45,6 +45,9 @@ set(handles.N,'String','');
 set(handles.mseT,'String','');
 set(handles.n_info,'String','');
 set(handles.b_info,'String','');
+set(handles.MSEM,'String','');
+set(handles.nM,'String','');
+set(handles.bM,'String','');
 cla(handles.axes1);
 cla(handles.axes2);
 set(handles.FunctionsMenu,'Value',1);
@@ -105,6 +108,18 @@ if ~strcmp(str{val},'Please Select a Function'),
     end
     if get(handles.best_values,'Value')==1,
         bitBudget = str2double(get(handles.bit_budget,'String'));
+         switch str{val};
+            case 'Function - 1'
+                [bNumerical,NNumerical,mseNumerical] = func1Numerically(Omega,Phi,A,bitBudget);
+            case 'Function - 2'
+                 [bNumerical,NNumerical,mseNumerical] = func2Numerically(Omega,Phi,A,bitBudget);
+            case 'Function - 3'
+                 [bNumerical,NNumerical,mseNumerical] = func3Numerically(Omega,Phi,A,Alpha,bitBudget);
+            case 'Function - 4'
+                 [bNumerical,NNumerical,mseNumerical] = func4Numerically(Omega,Phi,A,Alpha,bitBudget);
+            case 'Function - 5'
+                 [bNumerical,NNumerical,mseNumerical] = func5Numerically(Omega,Phi,A,Alpha,Beta,bitBudget);
+        end
         qss = sampleAndQuantize(s,bitBudget,1);
         mse = mseProject(s,qss);
         min_b = 1;
@@ -132,6 +147,21 @@ set(handles.n_info,'String',floor(bitBudget/min_b));
 
 % --- Executes on selection change in FunctionsMenu.
 function FunctionsMenu_Callback(hObject, eventdata, handles)
+set(handles.A,'String','');
+set(handles.Omega,'String','');
+set(handles.Phi,'String','');
+set(handles.Alpha,'String','');
+set(handles.Beta,'String','');
+set(handles.b,'String','');
+set(handles.N,'String','');
+set(handles.mseT,'String','');
+set(handles.n_info,'String','');
+set(handles.b_info,'String','');
+set(handles.MSEM,'String','');
+set(handles.nM,'String','');
+set(handles.bM,'String','');
+cla(handles.axes1);
+cla(handles.axes2);
 set(handles.A,'visible','on');
 set(handles.A_t,'visible','on');
 set(handles.Omega,'visible','on');
@@ -144,6 +174,7 @@ set(handles.b,'visible','on');
 set(handles.b_t,'visible','on');
 set(handles.computation_method,'visible','on');
 set(handles.specific_values,'visible','on');
+set(handles.specific_values,'','on');
 set(handles.best_values,'visible','on');
 str =get(hObject,'String');
 val =get(hObject,'Value');
