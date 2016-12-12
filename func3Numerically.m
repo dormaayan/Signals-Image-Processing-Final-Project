@@ -1,4 +1,4 @@
-function [b,N,mse] = func3Numerically( omega,phi,A,alpha,B)
+function [b,N,mse] = func3Numerically(omega,phi,A,alpha,B)
     syms symb;
     fun = @(t) (2.*pi.*A.*(omega+2.*alpha.*t).*cos(2.*pi.*t.*(omega+alpha.*t)+phi)).^2;
     Energy = integral(fun,0,1);

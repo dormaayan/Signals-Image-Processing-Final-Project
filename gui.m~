@@ -105,18 +105,6 @@ if ~strcmp(str{val},'Please Select a Function'),
     end
     if get(handles.best_values,'Value')==1,
         bitBudget = str2double(get(handles.bit_budget,'String'));
-         switch str{val};
-            case 'Function - 1'
-                [bNumerical,NNumerical,mseNumerical] = func1Numerically(Omega,Phi,A,bitBudget);
-            case 'Function - 2'
-                 [bNumerical,NNumerical,mseNumerical] = func2Numerically(Omega,Phi,A,bitBudget);
-            case 'Function - 3'
-                 [bNumerical,NNumerical,mseNumerical] = func3Numerically(Omega,Phi,A,Alpha,bitBudget);
-            case 'Function - 4'
-                 [bNumerical,NNumerical,mseNumerical] = func4Numerically(Omega,Phi,A,Alpha,bitBudget);
-            case 'Function - 5'
-                 [bNumerical,NNumerical,mseNumerical] = func5Numerically(Omega,Phi,A,Alpha,Beta,bitBudget);
-        end
         qss = sampleAndQuantize(s,bitBudget,1);
         mse = mseProject(s,qss);
         min_b = 1;
