@@ -1,3 +1,5 @@
+% Validate whether there is any dependency of the bit allocation problem
+% with the amplitude in function 1
 for i=1:1:10,
  B = 12379;
  omega = rand * 10;

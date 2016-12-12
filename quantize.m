@@ -1,3 +1,4 @@
+% Do the quantization process
 function [ qs ] = quantize(s,D,R,J )
 qs=s;
 [x,l]=size(s);

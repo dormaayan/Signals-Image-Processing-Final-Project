@@ -1,3 +1,5 @@
+% Validate our assumption in the theoretical part
+% that functions 1 and 2 are the same when omega is integer
 for i=1:1:10,
  B = 12379;
  A = rand * 100;

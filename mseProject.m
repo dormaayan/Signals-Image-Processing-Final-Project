@@ -1,5 +1,5 @@
 function [mse_error] = mseProject(A,B)
-%Calculate the mse error of the matrix
+%Calculate the mse error
 
 difference = double(A)- double(decompress_1d(B,numel(A)));
 % disp(difference);

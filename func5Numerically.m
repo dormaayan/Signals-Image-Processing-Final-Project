@@ -1,3 +1,4 @@
+% Numerical calculation of N,b and the mse of function 5
 function [b,N,mse] = func5Numerically( omega,phi,A,alpha,beta,B)
     syms symb;
     fun = @(t) (2.*pi.*(beta.*t+A).*(omega+2.*alpha.*t).*cos(2.*pi.*t.*(omega+alpha.*t)+phi)+beta.*sin(2.*pi.*t.*(omega+alpha.*t)+phi)).^2;

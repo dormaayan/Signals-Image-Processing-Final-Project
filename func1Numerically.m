@@ -1,3 +1,4 @@
+% Numerical calculation of N,b and the mse of function 1
 function [b,N,mse] = func1Numerically( omega,phi,A,B)
     syms symb;
     Energy = 0.5*pi*omega*A^2*(4*pi*omega+sin(4*pi*omega+2*phi)-sin(2*phi));
