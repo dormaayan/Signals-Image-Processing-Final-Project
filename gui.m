@@ -35,6 +35,9 @@ function varargout = gui_OutputFcn(hObject, eventdata, handles)
 varargout{1} = handles.output;
 
 function initialize_gui(fig_handle, handles, isreset)
+global s qss;
+s = NaN;
+qss = NaN;
 set(handles.A,'String','');
 set(handles.Omega,'String','');
 set(handles.Phi,'String','');
@@ -77,6 +80,7 @@ initialize_gui(gcbf, handles, true);
 
 % --- Executes on button press Apply.
 function Apply_Callback(hObject, eventdata, handles)
+global s qss;
 t_grid = 0:0.00001:1;
 A = str2double(get(handles.A,'String'));
 Omega = str2double(get(handles.Omega,'String'));
@@ -108,17 +112,17 @@ if ~strcmp(str{val},'Please Select a Function'),
     end
     if get(handles.best_values,'Value')==1,
         bitBudget = str2double(get(handles.bit_budget,'String'));
-         switch str{val};
+        switch str{val};
             case 'Function - 1'
                 [bNumerical,NNumerical,mseNumerical] = func1Numerically(Omega,Phi,A,bitBudget);
             case 'Function - 2'
-                 [bNumerical,NNumerical,mseNumerical] = func2Numerically(Omega,Phi,A,bitBudget);
+                [bNumerical,NNumerical,mseNumerical] = func2Numerically(Omega,Phi,A,bitBudget);
             case 'Function - 3'
-                 [bNumerical,NNumerical,mseNumerical] = func3Numerically(Omega,Phi,A,Alpha,bitBudget);
+                [bNumerical,NNumerical,mseNumerical] = func3Numerically(Omega,Phi,A,Alpha,bitBudget);
             case 'Function - 4'
-                 [bNumerical,NNumerical,mseNumerical] = func4Numerically(Omega,Phi,A,Alpha,bitBudget);
+                [bNumerical,NNumerical,mseNumerical] = func4Numerically(Omega,Phi,A,Alpha,bitBudget);
             case 'Function - 5'
-                 [bNumerical,NNumerical,mseNumerical] = func5Numerically(Omega,Phi,A,Alpha,Beta,bitBudget);
+                [bNumerical,NNumerical,mseNumerical] = func5Numerically(Omega,Phi,A,Alpha,Beta,bitBudget);
         end
         qss = sampleAndQuantize(s,bitBudget,1);
         mse = mseProject(s,qss);
@@ -132,17 +136,18 @@ if ~strcmp(str{val},'Please Select a Function'),
                 min_b = b;
             end
         end
-            set(handles.bM,'String',bNumerical);
-            set(handles.nM,'String',NNumerical);
-            set(handles.MSEM,'String',mseNumerical);
-        end
+        set(handles.bM,'String',bNumerical);
+        set(handles.nM,'String',NNumerical);
+        set(handles.MSEM,'String',mseNumerical);
     end
-plot(handles.axes1,t_grid,s);
-plot(handles.axes2,0:(1/(floor(bitBudget/min_b)-1)):1,qss);
+    qss = decompress_1d(qss,numel(t_grid));
+    plot(handles.axes1,t_grid,s);
+    plot(handles.axes2,t_grid,qss);
+    set(handles.mseT,'String',mseProject(s,qss));
+    set(handles.b_info,'String',min_b);
+    set(handles.n_info,'String',floor(bitBudget/min_b));
+end
 
-set(handles.mseT,'String',mseProject(s,qss));
-set(handles.b_info,'String',min_b);
-set(handles.n_info,'String',floor(bitBudget/min_b));
 
 
 % --- Executes on selection change in FunctionsMenu.
@@ -229,81 +234,16 @@ end
 
 % --- Executes on button press in playS.
 function playS_Callback(hObject, eventdata, handles)
-t_grid = 0:0.00001:1;
-A = str2double(get(handles.A,'String'));
-Omega = str2double(get(handles.Omega,'String'));
-Phi = str2double(get(handles.Phi,'String'));
-Alpha = str2double(get(handles.Alpha,'String'));
-Beta = str2double(get(handles.Beta,'String'));
-N = str2double(get(handles.N,'String'));
-b = str2double(get(handles.b,'String'));
-str =get(handles.FunctionsMenu,'String');
-val =get(handles.FunctionsMenu,'Value');
-switch str{val};
-    case 'Function - 1'
-        s = s1(A,Omega,Phi,t_grid);
-    case 'Function - 2'
-        s = s2(A,Omega,Phi,t_grid);
-    case 'Function - 3'
-        s = s3(A,Omega,Alpha,Phi,t_grid);
-    case 'Function - 4'
-        s = s4(A,Omega,Alpha,Phi,t_grid);
-    case 'Function - 5'
-        s = s5(A,Beta,Omega,Alpha,Phi,t_grid);
-end
-if ~strcmp(str{val},'Please Select a Function'),
+global s;
+if ~isnan(s),
     sound(s,25000);
 end
 
 
-
 % --- Executes on button press in SSQ.
 function SSQ_Callback(hObject, eventdata, handles)
-t_grid = 0:0.00001:1;
-A = str2double(get(handles.A,'String'));
-Omega = str2double(get(handles.Omega,'String'));
-Phi = str2double(get(handles.Phi,'String'));
-Alpha = str2double(get(handles.Alpha,'String'));
-Beta = str2double(get(handles.Beta,'String'));
-N = str2double(get(handles.N,'String'));
-b = str2double(get(handles.b,'String'));
-str =get(handles.FunctionsMenu,'String');
-val =get(handles.FunctionsMenu,'Value');
-switch str{val};
-    case 'Function - 1'
-        s = s1(A,Omega,Phi,t_grid);
-    case 'Function - 2'
-        s = s2(A,Omega,Phi,t_grid);
-    case 'Function - 3'
-        s = s3(A,Omega,Alpha,Phi,t_grid);
-    case 'Function - 4'
-        s = s4(A,Omega,Alpha,Phi,t_grid);
-    case 'Function - 5'
-        s = s5(A,Beta,Omega,Alpha,Phi,t_grid);
-end
-if ~strcmp(str{val},'Please Select a Function'),
-    if get(handles.specific_values,'Value')==1,
-        bitBudget = N*b;
-        qss = sampleAndQuantize(s,N,b);
-    end
-    if get(handles.best_values,'Value')==1,
-        bitBudget = str2double(get(handles.bit_budget,'String'));
-        qss = sampleAndQuantize(s,bitBudget,1);
-        mse = mseProject(s,qss);
-        for b=2:1:8,
-            l = bitBudget/b;
-            if mod(bitBudget/b,1)~=0,
-                l = floor(bitBudget/b);
-            end
-            if mseProject(s,sampleAndQuantize(s,bitBudget/b,b))<mse,
-                qss = sampleAndQuantize(s,bitBudget/b,b);
-                mse = mseProject(s,qss);
-            end
-        end
-    end
-end
-if ~strcmp(str{val},'Please Select a Function'),
-    %     qss = decompress_1d(qss,numel(t_grid));
+global qss;
+if ~isnan(qss),
     sound(qss,25000);
 end
 
