@@ -287,7 +287,6 @@ set(handles.bit_budget_t,'visible','on');
 function figure1_CreateFcn(hObject, eventdata, handles)
 set(handles.figure1, 'units', 'normalized', 'position', [0.05 0.15 0.9 0.8]);
 
-
 function b_Callback(hObject, eventdata, handles)
 
 function N_Callback(hObject, eventdata, handles)
