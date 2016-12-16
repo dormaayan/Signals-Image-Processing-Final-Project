@@ -31,10 +31,10 @@ guidata(hObject, handles);
 
 
 % --- Outputs from this function are returned to the command line.
-function varargout = gui_OutputFcn(hObject, eventdata, handles)
+function varargout = gui_OutputFcn(hObject, ~, handles)
 varargout{1} = handles.output;
 
-function initialize_gui(fig_handle, handles, isreset)
+function initialize_gui(~, handles, isreset)
 global s qss;
 s = NaN;
 qss = NaN;
@@ -151,7 +151,7 @@ end
 
 
 % --- Executes on selection change in FunctionsMenu.
-function FunctionsMenu_Callback(hObject, eventdata, handles)
+function FunctionsMenu_Callback(hObject, ~, handles)
 set(handles.A,'String','');
 set(handles.bit_budget,'String','');
 set(handles.Omega,'String','');
@@ -292,7 +292,7 @@ function b_Callback(hObject, eventdata, handles)
 
 function N_Callback(hObject, eventdata, handles)
 
-function pushbutton1_Callback(hObject, eventdata, handles)
+function pushbutton1_Callback(~, ~, ~)
 
 function popupmenu1_Callback(hObject, eventdata, handles)
 
@@ -304,7 +304,7 @@ function figure1_WindowButtonMotionFcn(hObject, eventdata, handles);
 
 function figure1_WindowButtonUpFcn(hObject, eventdata, handles)
 
-function figure1_WindowKeyPressFcn(hObject, eventdata, handles)
+function figure1_WindowKeyPressFcn(~, eventdata, handles)
 
 function figure1_WindowKeyReleaseFcn(hObject, eventdata, handles)
 
@@ -330,7 +330,7 @@ end
 
 function edit10_Callback(hObject, eventdata, handles)
 
-function popupmenu1_CreateFcn(hObject, eventdata, handles)
+function popupmenu1_CreateFcn(hObject, ~, handles)
 if ispc && isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgroundColor'))
     set(hObject,'BackgroundColor','white');
 end
