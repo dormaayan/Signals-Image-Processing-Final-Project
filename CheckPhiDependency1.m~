@@ -1,9 +1,10 @@
 % Validate whether there is any dependency of the bit allocation problem
-% with the amplitude in function 3
+% with the phi in function 1 when omega is integer and when not
 for i=1:1:10,
  B = 12379;
  omega = rand * 10;
  phi = rand*2*pi;
+ floor_phi = fl
  alpha = rand * 10;
  [b_org,N_org,] = func3Numerically( omega,phi,1,alpha,B);
  for j=10:10:100,
