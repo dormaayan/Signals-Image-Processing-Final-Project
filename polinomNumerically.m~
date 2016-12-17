@@ -1,0 +1,8 @@
+% Numerical calculation of N,b and the mse of function 1
+function [b,N] = polinomNumerically(B)
+    syms symb;
+   double(solve(Energy/(6*B^2)*symb-log(2)*range^2/(6*2^(2*symb)),symb));
+    b = double(solve(symb/(6*B^2)*21-ln?(2)/6*(4/(2^(2*symb))),symb));
+    N = B/b;
+end
+

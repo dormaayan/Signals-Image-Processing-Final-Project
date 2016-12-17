@@ -6,6 +6,7 @@ for i=1:1:10,
     B = 2048;
     omega = rand * 10 + epsilon;
     floor_omega = ceil(omega);
+    phi = rand*2*pi;
     [b_org,N_org,] = func1Numerically(omega,phi,A,B);
     [b_org_floor,N_org_floor,] = func1Numerically(floor_omega,phi,A,B);
     for j=1:1:10,
